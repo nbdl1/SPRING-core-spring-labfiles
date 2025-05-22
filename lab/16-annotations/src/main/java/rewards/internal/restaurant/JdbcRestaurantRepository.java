@@ -2,6 +2,8 @@ package rewards.internal.restaurant;
 
 import common.money.Percentage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -191,5 +193,10 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 		Restaurant restaurant = new Restaurant(number, name);
 		restaurant.setBenefitPercentage(benefitPercentage);
 		return restaurant;
+	}
+
+	@Value("HelloValue")
+	public String testBeanHello() {
+		return "Hello";
 	}
 }

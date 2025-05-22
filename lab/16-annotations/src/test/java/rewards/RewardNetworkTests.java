@@ -3,8 +3,13 @@ package rewards;
 import common.money.MonetaryAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
+import rewards.internal.restaurant.JdbcRestaurantRepository;
+
+import javax.annotation.PostConstruct;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -71,5 +76,16 @@ public class RewardNetworkTests {
 		// each distribution should be 4.00 (as both have a 50% allocation)
 		assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Annabelle").getAmount());
 		assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Corgan").getAmount());
+	}
+
+	@Test
+	public void testHello(){
+		
+		String hello;
+		ApplicationContext context = SpringApplication.run(TestInfrastructureConfig.class);
+			hello = (String) context.getBean("Name");
+		assertEquals("Hello", hello);
+		System.out.println("bean was - "+hello);
+
 	}
 }
