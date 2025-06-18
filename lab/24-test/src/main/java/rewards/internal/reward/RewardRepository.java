@@ -1,5 +1,7 @@
 package rewards.internal.reward;
 
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 import rewards.AccountContribution;
 import rewards.Dining;
 import rewards.RewardConfirmation;
@@ -7,6 +9,8 @@ import rewards.RewardConfirmation;
 /**
  * Handles creating records of reward transactions to track contributions made to accounts for dining at restaurants.
  */
+@Repository
+@Profile("stub")
 public interface RewardRepository {
 
 	/**
