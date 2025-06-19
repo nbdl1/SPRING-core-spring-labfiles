@@ -1,5 +1,7 @@
 package rewards.internal;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import rewards.AccountContribution;
 import rewards.Dining;
 import rewards.RewardConfirmation;
@@ -27,6 +29,7 @@ public class RewardNetworkImpl implements RewardNetwork {
 	private RestaurantRepository restaurantRepository;
 
 	private RewardRepository rewardRepository;
+
 
 	/**
 	 * Creates a new reward network.

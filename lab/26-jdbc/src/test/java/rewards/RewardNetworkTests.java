@@ -4,6 +4,7 @@ import common.money.MonetaryAmount;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -23,6 +24,9 @@ public class RewardNetworkTests {
 	 */
 	@Autowired
 	private RewardNetwork rewardNetwork;
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Test
 	public void testRewardForDining() {

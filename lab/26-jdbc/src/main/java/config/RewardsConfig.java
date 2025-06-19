@@ -50,5 +50,9 @@ public class RewardsConfig {
 		JdbcRewardRepository repository = new JdbcRewardRepository(dataSource);
 		return repository;
 	}
+	@Bean
+	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+		return new JdbcTemplate(dataSource);
+	}
 	
 }
