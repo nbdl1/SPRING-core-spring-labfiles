@@ -75,7 +75,7 @@ public class JdbcRewardRepositoryTests {
 		//    the build.gradle file.)
 		//
 		
-		Map<String, Object> values = null;
+		Map<String, Object> values = jdbcTemplate.queryForMap("SELECT * FROM T_REWARD WHERE CONFIRMATION_NUMBER = ?");
 		verifyInsertedValues(confirmation, dining, values);
 	}
 
@@ -92,7 +92,7 @@ public class JdbcRewardRepositoryTests {
 	private int getRewardCount() throws SQLException {
 		// TODO-01: Use JdbcTemplate to query for the number of rows in the T_REWARD table
 		// - Use "SELECT count(*) FROM T_REWARD" as SQL statement
-		return -1;
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM T_REWARD", Integer.class);
 	}
 
 	private DataSource createTestDataSource() {

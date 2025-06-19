@@ -2,7 +2,10 @@ package rewards.internal.account;
 
 import common.money.MonetaryAmount;
 import common.money.Percentage;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -28,9 +31,19 @@ import java.sql.SQLException;
 public class JdbcAccountRepository implements AccountRepository {
 
 	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplate;
 
-	public JdbcAccountRepository(DataSource dataSource) {
+	ResultSetExtractor<Account> extractor = new ResultSetExtractor<Account>() {
+		@Override
+		public Account extractData(ResultSet rs) throws SQLException, DataAccessException {
+
+			return mapAccount(rs);
+		};
+	};
+
+	public JdbcAccountRepository(DataSource dataSource, JdbcTemplate jdbcTemplate) {
 		this.dataSource = dataSource;
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	// TODO-07 (Optional): Refactor this method using JdbcTemplate and ResultSetExtractor
@@ -48,9 +61,14 @@ public class JdbcAccountRepository implements AccountRepository {
 			"where c.ACCOUNT_ID = a.ID and c.NUMBER = ?";
 		
 		Account account = null;
+
+		account = jdbcTemplate.query(sql,extractor,creditCardNumber);
+		/*
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+
+
 		try {
 			conn = dataSource.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -81,7 +99,7 @@ public class JdbcAccountRepository implements AccountRepository {
 				} catch (SQLException ex) {
 				}
 			}
-		}
+		} */
 		return account;
 	}
 
@@ -94,6 +112,15 @@ public class JdbcAccountRepository implements AccountRepository {
 		String sql = "update T_ACCOUNT_BENEFICIARY SET SAVINGS = ? where ACCOUNT_ID = ? and NAME = ?";
 		Connection conn = null;
 		PreparedStatement ps = null;
+		for (Beneficiary beneficiary : account.getBeneficiaries()) {
+			jdbcTemplate.update(sql,
+					beneficiary.getSavings().asBigDecimal(),
+					account.getEntityId(),
+					beneficiary.getName()
+			);
+		}
+
+		/*
 		try {
 			conn = dataSource.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -120,7 +147,9 @@ public class JdbcAccountRepository implements AccountRepository {
 				} catch (SQLException ex) {
 				}
 			}
-		}
+		} */
+
+
 	}
 
 	/**
