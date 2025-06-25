@@ -14,6 +14,7 @@ plugins {
     id 'org.springframework.boot' version "$springBootVersion"
 }
 
+
 allprojects {
     apply plugin: 'maven-publish'
 
@@ -42,8 +43,9 @@ subprojects {
         implementation "org.springframework.boot:spring-boot-starter"
         implementation "org.springframework.boot:spring-boot-starter-jdbc"
         implementation "org.hsqldb:hsqldb"
-        //testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
         testImplementation "org.springframework.boot:spring-boot-starter-test"
+        testImplementation 'org.junit.jupiter:junit-jupiter-api'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     }
 
     sourceCompatibility = '11'
